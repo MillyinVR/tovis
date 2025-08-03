@@ -27,6 +27,7 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
+    "types": ["node"],
       "~/*": ["./src/*"]
     }
   },
