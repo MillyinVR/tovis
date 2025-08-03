@@ -1,0 +1,9 @@
+# top-level ignore
+node_modules/
+.env*
+.DS_Store
+
+# build / cache
+apps/**/.next
+apps/**/dist
+packages/**/dist
