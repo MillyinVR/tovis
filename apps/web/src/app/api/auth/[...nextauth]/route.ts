@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import Email from 'next-auth/providers/email';
-import { createServerClient } from '@supabase/auth-helpers-nextjs';
 
 const emailProvider = Email({
   server: { host: 'localhost', port: 1025 }, // we'll use Mailpit later
@@ -11,7 +10,9 @@ export const handler = NextAuth({
   providers: [emailProvider],
   callbacks: {
     session({ session, token }) {
-      session.user.role = token.role as string;
+      if (session.user) {
+        session.user.role = token.role as string;
+      }
       return session;
     },
     async jwt({ token, user }) {
