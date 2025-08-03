@@ -2,5 +2,17 @@
   "name": "tovis",
   "private": true,
   "packageManager": "pnpm@8.15.5",
-  "workspaces": ["apps/*", "packages/*", "infra", "tools"]
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "infra",
+    "tools"
+  ],
+  "dependencies": {
+    "drizzle-orm": "^0.44.4",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.4"
+  }
 }
