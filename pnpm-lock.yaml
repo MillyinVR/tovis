@@ -83,7 +83,7 @@ importers:
         specifier: ^9.23.0
         version: 9.32.0
       eslint-config-next:
-        specifier: ^15.2.3
+        specifier: ^15.4.5
         version: 15.4.5(eslint@9.32.0)(typescript@5.9.2)
       postcss:
         specifier: ^8.5.3
