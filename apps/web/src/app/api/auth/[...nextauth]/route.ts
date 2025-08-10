@@ -10,17 +10,15 @@ export const authOptions: NextAuthOptions = {
   providers: [emailProvider],
   callbacks: {
     session({ session, token }) {
-      if (session.user) {
-        session.user.role = token.role as string;
-      }
+      session.user.role = token.role;
       return session;
     },
     async jwt({ token, user }) {
-      if (user) token.role = (user as any).role;
+      if (user) token.role = user.role;
       return token;
     }
   }
 };
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions) as unknown;
 export { handler as GET, handler as POST };

@@ -9,7 +9,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { getServerSession, type Session } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "~/app/api/auth/[...nextauth]/route";
 
 /**
@@ -115,7 +115,7 @@ export const protectedProcedure = publicProcedure.use(
     if (!session || !session.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
-    return next({ ctx: { session: session as Session } });
+    return next({ ctx: { session } });
   }),
 );
 
