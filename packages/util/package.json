@@ -1,0 +1,12 @@
+{
+  "name": "@tovis/util",
+  "version": "0.1.0",
+  "main": "src/upload.ts",
+  "types": "src/upload.ts",
+  "exports": {
+    "./upload": "./src/upload.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3"
+  }
+}
