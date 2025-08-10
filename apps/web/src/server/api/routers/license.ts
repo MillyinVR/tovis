@@ -33,7 +33,7 @@ export const licenseRouter = createTRPCRouter({
       const license: License = {
         id: crypto.randomUUID(),
         professionalId: ctx.session.user.id,
-        stateCode: input.stateCode,
+        stateCode: input.stateCode.toUpperCase(),
         licenseNumber: input.licenseNumber,
         issuedDate: input.issuedDate,
         expiresDate: input.expiresDate,
