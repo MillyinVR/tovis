@@ -1,15 +1,17 @@
-import { trpc } from '@/lib/trpc';
+"use client";
+
+import { api, type RouterOutputs } from '~/trpc/react';
 
 export default function PendingLicenses() {
-  const { data, refetch } = trpc.license.adminListPending.useQuery();
-  const approve = trpc.license.adminUpdateStatus.useMutation({ onSuccess: () => refetch() });
+  const { data, refetch } = api.license.adminListPending.useQuery();
+  const approve = api.license.adminUpdateStatus.useMutation({ onSuccess: () => refetch() });
 
   if (!data) return <p>Loading…</p>;
   return (
     <table>
       <thead><tr><th>Pro</th><th>State</th><th>#</th><th></th></tr></thead>
       <tbody>
-        {data.map(l => (
+        {data.map((l: RouterOutputs['license']['adminListPending'][number]) => (
           <tr key={l.id}>
             <td>{l.professionalId.slice(0, 8)}</td>
             <td>{l.stateCode}</td>

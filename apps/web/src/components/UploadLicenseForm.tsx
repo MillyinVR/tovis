@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadToPrivateBucket } from '@tovis/util/upload';
-import { trpc } from '@/lib/trpc';
+import { api } from '~/trpc/react';
 
 const formSchema = z.object({
   stateCode: z.string().length(2, '2-letter state code'),
@@ -19,12 +19,12 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function UploadLicenseForm() {
-  const { mutateAsync } = trpc.license.create.useMutation();
+  const { mutateAsync } = api.license.create.useMutation();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
-  } = useForm<FormValues>({ resolver: zodResolver(formSchema) });
+  } = useForm({ resolver: zodResolver(formSchema) });
   const [done, setDone] = useState(false);
 
   const onSubmit = async (data: FormValues) => {

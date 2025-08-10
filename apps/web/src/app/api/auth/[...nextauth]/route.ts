@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 import Email from 'next-auth/providers/email';
 
 const emailProvider = Email({
@@ -6,7 +6,7 @@ const emailProvider = Email({
   from: 'no-reply@tovis.local'
 });
 
-export const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [emailProvider],
   callbacks: {
     session({ session, token }) {
@@ -20,5 +20,7 @@ export const handler = NextAuth({
       return token;
     }
   }
-});
+};
+
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
