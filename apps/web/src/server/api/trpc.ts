@@ -6,9 +6,11 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { getServerSession } from "next-auth";
+import { authOptions } from "~/app/api/auth/[...nextauth]/route";
 
 /**
  * 1. CONTEXT
@@ -23,8 +25,10 @@ import { ZodError } from "zod";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const session = await getServerSession(authOptions);
   return {
     ...opts,
+    session,
   };
 };
 
@@ -101,3 +105,29 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Protected procedure requiring a logged in user.
+ */
+export const protectedProcedure = publicProcedure.use(
+  t.middleware(async ({ ctx, next }) => {
+    const session = ctx.session;
+    if (!session || !session.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return next({ ctx: { session } });
+  }),
+);
+
+/**
+ * Admin-only procedure.
+ */
+export const adminProcedure = protectedProcedure.use(
+  t.middleware(({ ctx, next }) => {
+    const { session } = ctx;
+    if (!session || session.user.role !== "admin") {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+    return next();
+  }),
+);
