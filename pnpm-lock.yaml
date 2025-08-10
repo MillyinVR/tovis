@@ -36,6 +36,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.69.0
         version: 5.84.1(react@19.1.1)
+      '@tovis/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@trpc/client':
         specifier: ^11.0.0
         version: 11.4.3(@trpc/server@11.4.3)(typescript@5.9.2)
@@ -121,6 +124,9 @@ importers:
 
   packages/util:
     dependencies:
+      '@supabase/ssr':
+        specifier: ^0.5.2
+        version: 0.5.2(@supabase/supabase-js@2.53.0)
       '@supabase/supabase-js':
         specifier: ^2.39.3
         version: 2.53.0
@@ -1162,6 +1168,16 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@supabase/ssr@0.5.2(@supabase/supabase-js@2.53.0):
+    resolution: {integrity: sha512-n3plRhr2Bs8Xun1o4S3k1CDv17iH5QY9YcoEvXX3bxV1/5XSasA0mNXYycFmADIdtdE6BG9MRjP5CGIs8qxC8A==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.43.4
+    dependencies:
+      '@supabase/supabase-js': 2.53.0
+      '@types/cookie': 0.6.0
+      cookie: 0.7.2
+    dev: false
+
   /@supabase/storage-js@2.10.4:
     resolution: {integrity: sha512-cvL02GarJVFcNoWe36VBybQqTVRq6wQSOCvTS64C+eyuxOruFIm1utZAY0xi2qKtHJO3EjKaj8iWJKySusDmAQ==}
     dependencies:
@@ -1439,6 +1455,10 @@ packages:
       tslib: 2.8.1
     dev: true
     optional: true
+
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
 
   /@types/estree@1.0.8:
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}

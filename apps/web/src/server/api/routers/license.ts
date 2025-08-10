@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { createTRPCRouter, protectedProcedure, adminProcedure } from '../trpc';
+import { createTRPCRouter, publicProcedure, protectedProcedure, adminProcedure } from '../trpc';
 
 interface License {
   id: string;
@@ -18,7 +18,7 @@ interface License {
 const licenses: License[] = [];
 
 export const licenseRouter = createTRPCRouter({
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         stateCode: z.string().length(2),
@@ -29,10 +29,10 @@ export const licenseRouter = createTRPCRouter({
         backImagePath: z.string().optional(),
       }),
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(({ input }) => {
       const license: License = {
         id: crypto.randomUUID(),
-        professionalId: ctx.session.user.id,
+        professionalId: 'dev-user-' + Date.now(), // Temporary ID for development
         stateCode: input.stateCode,
         licenseNumber: input.licenseNumber,
         issuedDate: input.issuedDate,
@@ -42,6 +42,7 @@ export const licenseRouter = createTRPCRouter({
         status: 'pending',
       };
       licenses.push(license);
+      console.log('License created:', license);
       return license;
     }),
 
@@ -65,4 +66,3 @@ export const licenseRouter = createTRPCRouter({
       return license;
     }),
 });
-
